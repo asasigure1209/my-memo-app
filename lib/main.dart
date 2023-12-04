@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
 void main() {
   runApp(const MyApp());
@@ -49,15 +50,25 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           child: Column(
             children: [
-              QuillToolbar(
-                configurations: toolbarConfigurations(),
-              ),
               Expanded(
                 child: QuillEditor.basic(
                   configurations: const QuillEditorConfigurations(
                     readOnly: false,
                   ),
                 ),
+              ),
+              KeyboardVisibilityBuilder(
+                builder: (context, isKeyboardVisible) {
+                  return AnimatedContainer(
+                      duration: const Duration(milliseconds: 200),
+                      margin: EdgeInsets.only(
+                          bottom: isKeyboardVisible
+                              ? MediaQuery.of(context).viewInsets.bottom
+                              : 0),
+                      child: QuillToolbar(
+                        configurations: toolbarConfigurations(),
+                      ));
+                },
               )
             ],
           ),
