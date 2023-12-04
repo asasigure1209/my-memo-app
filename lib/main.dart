@@ -49,7 +49,9 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           child: Column(
             children: [
-              const QuillToolbar(),
+              QuillToolbar(
+                configurations: toolbarConfigurations(),
+              ),
               Expanded(
                 child: QuillEditor.basic(
                   configurations: const QuillEditorConfigurations(
@@ -60,5 +62,41 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
           ),
         ));
+  }
+
+  QuillToolbarConfigurations toolbarConfigurations() {
+    return const QuillToolbarConfigurations(
+        toolbarIconAlignment: WrapAlignment.spaceAround,
+        showAlignmentButtons: false,
+        showBackgroundColorButton: false,
+        showBoldButton: false,
+        showCenterAlignment: false,
+        showClearFormat: false,
+        showCodeBlock: false,
+        showColorButton: false,
+        showDirection: false,
+        showDividers: false,
+        showFontFamily: false,
+        showFontSize: false,
+        showHeaderStyle: false,
+        showIndent: false,
+        showInlineCode: false,
+        showItalicButton: false,
+        showJustifyAlignment: false,
+        showLeftAlignment: false,
+        showLink: false,
+        showListBullets: true,
+        showListCheck: true,
+        showListNumbers: true,
+        showQuote: false,
+        showRedo: true,
+        showRightAlignment: false,
+        showSearchButton: false,
+        showSmallButton: false,
+        showStrikeThrough: false,
+        showSubscript: false,
+        showSuperscript: false,
+        showUnderLineButton: false,
+        showUndo: true);
   }
 }
