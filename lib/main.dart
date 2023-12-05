@@ -13,9 +13,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'MyMemo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        primarySwatch: Colors.blue,
+        textTheme: const TextTheme(
+            bodyLarge: TextStyle(color: Colors.white),
+            bodyMedium: TextStyle(color: Colors.white),
+            bodySmall: TextStyle(color: Colors.white)),
+        scaffoldBackgroundColor: const Color.fromARGB(255, 19, 19, 19),
+        appBarTheme: const AppBarTheme(
+            backgroundColor: Color.fromARGB(255, 19, 19, 19),
+            titleTextStyle: TextStyle(color: Colors.white, fontSize: 20)),
         useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
@@ -38,7 +46,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text(widget.title),
         ),
         body: QuillProvider(
@@ -51,12 +58,15 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             children: [
               Expanded(
+                  child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 24.0), // 水平方向（左右）に16.0のパディング
                 child: QuillEditor.basic(
                   configurations: const QuillEditorConfigurations(
                     readOnly: false,
                   ),
                 ),
-              ),
+              )),
               KeyboardVisibilityBuilder(
                 builder: (context, isKeyboardVisible) {
                   return AnimatedContainer(
