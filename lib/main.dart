@@ -27,7 +27,39 @@ class MyApp extends StatelessWidget {
             titleTextStyle: TextStyle(color: AppColors.mainText, fontSize: 20)),
         useMaterial3: true,
       ),
-      home: const MemoPage(title: 'Flutter Demo Home Page'),
+      home: const SubPage(),
+      routes: <String, WidgetBuilder>{
+        '/home': (BuildContext context) => const SubPage(),
+        '/subpage': (BuildContext context) =>
+            const MemoPage(title: 'Flluter Demo Home Page')
+      },
+    );
+  }
+}
+
+class SubPage extends StatelessWidget {
+  const SubPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Navigator'),
+      ),
+      body: Container(
+        padding: const EdgeInsets.all(32.0),
+        child: Center(
+          child: Column(
+            children: <Widget>[
+              const Text('Sub'),
+              ElevatedButton(
+                onPressed: () => Navigator.of(context).pushNamed("/subpage"),
+                child: const Text('memo'),
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
