@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:my_memo_app/database/database.dart';
+import 'package:my_memo_app/memo/memo.dart';
+import 'package:sqflite/sqflite.dart';
 import 'package:my_memo_app/memo_page.dart';
 
 import 'constant/app_color.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Database db = await initializeDB();
+
+  List<Memo> memos = await getMemos(db);
+
+  runApp(MyApp(memos: memos));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final List<Memo> memos;
+  const MyApp({super.key, required this.memos});
 
   // This widget is the root of your application.
   @override
@@ -43,9 +52,6 @@ class SubPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Navigator'),
-      ),
       body: Container(
         padding: const EdgeInsets.all(32.0),
         child: Center(
