@@ -1,10 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:my_memo_app/database/database.dart';
+import 'package:my_memo_app/memo/memo.dart';
 
 class MemoPage extends StatefulWidget {
-  const MemoPage({super.key, required this.title});
-  final String title;
+  final Memo memo;
+  const MemoPage({super.key, required this.memo});
 
   @override
   State<MemoPage> createState() => _MemoPageState();
@@ -15,10 +19,27 @@ class _MemoPageState extends State<MemoPage> {
 
   @override
   Widget build(BuildContext context) {
+    _controller.document = Document.fromJson(jsonDecode(widget.memo.content));
+
     return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-        ),
+        appBar: AppBar(title: Text(widget.memo.title), actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.save),
+            tooltip: 'Show Snackbar',
+            onPressed: () {
+              // ちゃんとSave後に表示するようにしたい
+              updateRecord(Memo(
+                  id: widget.memo.id,
+                  title: widget.memo.title,
+                  updatedAt: "2023/12/9",
+                  createdAt: "2023/12/9",
+                  content:
+                      jsonEncode(_controller.document.toDelta().toJson())));
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(const SnackBar(content: Text('メモを保存しました')));
+            },
+          ),
+        ]),
         body: QuillProvider(
           configurations: QuillConfigurations(
             controller: _controller,

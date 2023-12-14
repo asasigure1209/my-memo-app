@@ -22,7 +22,18 @@ Future<void> insertMemo(Database db, Memo memo) async {
   );
 }
 
-Future<List<Memo>> getMemos(Database db) async {
+Future<void> updateRecord(Memo memo) async {
+  Database db = await initializeDB();
+  await db.update(
+    'memos',
+    memo.toMap(),
+    where: 'id = ?',
+    whereArgs: [memo.id],
+  );
+}
+
+Future<List<Memo>> getMemos() async {
+  Database db = await initializeDB();
   final List<Map<String, dynamic>> maps = await db.query('memos');
 
   return List.generate(maps.length, (i) {

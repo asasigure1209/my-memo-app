@@ -1,23 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:my_memo_app/database/database.dart';
-import 'package:my_memo_app/memo/memo.dart';
-import 'package:sqflite/sqflite.dart';
-import 'package:my_memo_app/memo_page.dart';
-
-import 'constant/app_color.dart';
+import 'package:my_memo_app/home_page.dart';
+import 'package:my_memo_app/constant/app_color.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Database db = await initializeDB();
+  await initializeDB();
 
-  List<Memo> memos = await getMemos(db);
-
-  runApp(MyApp(memos: memos));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final List<Memo> memos;
-  const MyApp({super.key, required this.memos});
+  const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
@@ -33,39 +27,11 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: AppColors.mainBackground,
         appBarTheme: const AppBarTheme(
             backgroundColor: AppColors.mainBackground,
-            titleTextStyle: TextStyle(color: AppColors.mainText, fontSize: 20)),
+            titleTextStyle: TextStyle(color: AppColors.mainText, fontSize: 20),
+            iconTheme: IconThemeData(color: AppColors.mainText)),
         useMaterial3: true,
       ),
-      home: const SubPage(),
-      routes: <String, WidgetBuilder>{
-        '/home': (BuildContext context) => const SubPage(),
-        '/subpage': (BuildContext context) =>
-            const MemoPage(title: 'Flluter Demo Home Page')
-      },
-    );
-  }
-}
-
-class SubPage extends StatelessWidget {
-  const SubPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        padding: const EdgeInsets.all(32.0),
-        child: Center(
-          child: Column(
-            children: <Widget>[
-              const Text('Sub'),
-              ElevatedButton(
-                onPressed: () => Navigator.of(context).pushNamed("/subpage"),
-                child: const Text('memo'),
-              )
-            ],
-          ),
-        ),
-      ),
+      home: const HomePage(),
     );
   }
 }

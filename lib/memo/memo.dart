@@ -1,12 +1,12 @@
 class Memo {
-  final int id;
+  final int? id;
   final String title;
   final String updatedAt;
   final String createdAt;
   final String content;
 
   Memo(
-      {required this.id,
+      {this.id,
       required this.title,
       required this.updatedAt,
       required this.createdAt,
