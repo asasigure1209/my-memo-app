@@ -19,7 +19,10 @@ class _MemoPageState extends State<MemoPage> {
 
   @override
   Widget build(BuildContext context) {
-    _controller.document = Document.fromJson(jsonDecode(widget.memo.content));
+    if (widget.memo.content != null) {
+      _controller.document =
+          Document.fromJson(jsonDecode(widget.memo.content!));
+    }
 
     return Scaffold(
         appBar: AppBar(title: Text(widget.memo.title), actions: <Widget>[
@@ -27,14 +30,22 @@ class _MemoPageState extends State<MemoPage> {
             icon: const Icon(Icons.save),
             tooltip: 'Show Snackbar',
             onPressed: () {
-              // ちゃんとSave後に表示するようにしたい
-              updateRecord(Memo(
-                  id: widget.memo.id,
-                  title: widget.memo.title,
-                  updatedAt: "2023/12/9",
-                  createdAt: "2023/12/9",
-                  content:
-                      jsonEncode(_controller.document.toDelta().toJson())));
+              if (widget.memo.id == null) {
+                insertMemo(Memo(
+                    title: widget.memo.title,
+                    updatedAt: "2023/12/9",
+                    createdAt: "2023/12/9",
+                    content:
+                        jsonEncode(_controller.document.toDelta().toJson())));
+              } else {
+                updateRecord(Memo(
+                    id: widget.memo.id,
+                    title: widget.memo.title,
+                    updatedAt: "2023/12/9",
+                    createdAt: "2023/12/9",
+                    content:
+                        jsonEncode(_controller.document.toDelta().toJson())));
+              }
               ScaffoldMessenger.of(context)
                   .showSnackBar(const SnackBar(content: Text('メモを保存しました')));
             },

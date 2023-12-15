@@ -14,7 +14,8 @@ Future<Database> initializeDB() async {
   );
 }
 
-Future<void> insertMemo(Database db, Memo memo) async {
+Future<void> insertMemo(Memo memo) async {
+  Database db = await initializeDB();
   await db.insert(
     'memos',
     memo.toMap(),
@@ -45,4 +46,14 @@ Future<List<Memo>> getMemos() async {
       content: maps[i]['content'],
     );
   });
+}
+
+Future<void> deleteRecord(int id) async {
+  Database db = await initializeDB();
+
+  await db.delete(
+    'memos',
+    where: 'id = ?',
+    whereArgs: [id],
+  );
 }

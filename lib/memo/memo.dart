@@ -3,14 +3,14 @@ class Memo {
   final String title;
   final String updatedAt;
   final String createdAt;
-  final String content;
+  final String? content;
 
   Memo(
       {this.id,
-      required this.title,
-      required this.updatedAt,
-      required this.createdAt,
-      required this.content});
+      this.title = "新規作成",
+      this.updatedAt = "12/16",
+      this.createdAt = "12/16",
+      this.content});
 
   Map<String, dynamic> toMap() {
     return {
