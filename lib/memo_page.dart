@@ -33,16 +33,13 @@ class _MemoPageState extends State<MemoPage> {
               if (widget.memo.id == null) {
                 insertMemo(Memo(
                     title: widget.memo.title,
-                    updatedAt: "2023/12/9",
-                    createdAt: "2023/12/9",
                     content:
                         jsonEncode(_controller.document.toDelta().toJson())));
               } else {
                 updateRecord(Memo(
                     id: widget.memo.id,
                     title: widget.memo.title,
-                    updatedAt: "2023/12/9",
-                    createdAt: "2023/12/9",
+                    createdAt: widget.memo.createdAt,
                     content:
                         jsonEncode(_controller.document.toDelta().toJson())));
               }

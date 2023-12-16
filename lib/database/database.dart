@@ -35,7 +35,8 @@ Future<void> updateRecord(Memo memo) async {
 
 Future<List<Memo>> getMemos() async {
   Database db = await initializeDB();
-  final List<Map<String, dynamic>> maps = await db.query('memos');
+  final List<Map<String, dynamic>> maps =
+      await db.query('memos', orderBy: 'updated_at DESC');
 
   return List.generate(maps.length, (i) {
     return Memo(

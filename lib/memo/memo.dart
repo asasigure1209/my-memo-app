@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class Memo {
   final int? id;
   final String title;
@@ -8,9 +10,13 @@ class Memo {
   Memo(
       {this.id,
       this.title = "新規作成",
-      this.updatedAt = "12/16",
-      this.createdAt = "12/16",
-      this.content});
+      String? updatedAt,
+      String? createdAt,
+      this.content})
+      : updatedAt = updatedAt ??
+            DateFormat('yyyy/MM/dd HH:mm').format(DateTime.now().toLocal()),
+        createdAt = createdAt ??
+            DateFormat('yyyy/MM/dd HH:mm').format(DateTime.now().toLocal());
 
   Map<String, dynamic> toMap() {
     return {
