@@ -17,11 +17,9 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    loadMemos();
   }
 
-  void loadMemos() async {
-    memos = await getMemos();
+  void load() async {
     setState(() {});
   }
 
@@ -33,7 +31,7 @@ class _HomePageState extends State<HomePage> {
       ),
     );
 
-    loadMemos(); // ここでsetStateを含むメモリストの再読み込みを行う
+    load();
   }
 
   @override
