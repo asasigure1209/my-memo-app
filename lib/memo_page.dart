@@ -19,26 +19,28 @@ class _MemoPageState extends State<MemoPage> {
 
   @override
   Widget build(BuildContext context) {
+    String title = widget.memo.title;
+
     if (widget.memo.content != null) {
       _controller.document =
           Document.fromJson(jsonDecode(widget.memo.content!));
     }
 
     return Scaffold(
-        appBar: AppBar(title: Text(widget.memo.title), actions: <Widget>[
+        appBar: AppBar(actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.save),
-            tooltip: 'Show Snackbar',
+            tooltip: 'メモを保存',
             onPressed: () {
               if (widget.memo.id == null) {
                 insertMemo(Memo(
-                    title: widget.memo.title,
+                    title: title,
                     content:
                         jsonEncode(_controller.document.toDelta().toJson())));
               } else {
                 updateRecord(Memo(
                     id: widget.memo.id,
-                    title: widget.memo.title,
+                    title: title,
                     createdAt: widget.memo.createdAt,
                     content:
                         jsonEncode(_controller.document.toDelta().toJson())));
@@ -59,13 +61,29 @@ class _MemoPageState extends State<MemoPage> {
             children: [
               Expanded(
                   child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 24.0), // 水平方向（左右）に16.0のパディング
-                child: QuillEditor.basic(
-                  configurations: const QuillEditorConfigurations(
-                    readOnly: false,
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: Column(children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 24),
+                    child: TextField(
+                        controller:
+                            TextEditingController(text: widget.memo.title),
+                        onChanged: (value) {
+                          title = value;
+                        },
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                        ),
+                        style: const TextStyle(
+                          fontSize: 24,
+                        )),
                   ),
-                ),
+                  QuillEditor.basic(
+                    configurations: const QuillEditorConfigurations(
+                      readOnly: false,
+                    ),
+                  )
+                ]),
               )),
               KeyboardVisibilityBuilder(
                 builder: (context, isKeyboardVisible) {
