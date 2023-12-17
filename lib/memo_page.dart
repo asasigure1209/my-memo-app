@@ -61,30 +61,30 @@ class _MemoPageState extends State<MemoPage> {
             children: [
               Expanded(
                   child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                child: Column(children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 24),
-                    child: TextField(
-                        controller:
-                            TextEditingController(text: widget.memo.title),
-                        onChanged: (value) {
-                          title = value;
-                        },
-                        decoration: const InputDecoration(
-                          border: InputBorder.none,
+                      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                      child: SingleChildScrollView(
+                          child: Column(children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 24),
+                          child: TextField(
+                              controller: TextEditingController(
+                                  text: widget.memo.title),
+                              onChanged: (value) {
+                                title = value;
+                              },
+                              decoration: const InputDecoration(
+                                border: InputBorder.none,
+                              ),
+                              style: const TextStyle(
+                                fontSize: 24,
+                              )),
                         ),
-                        style: const TextStyle(
-                          fontSize: 24,
-                        )),
-                  ),
-                  QuillEditor.basic(
-                    configurations: const QuillEditorConfigurations(
-                      readOnly: false,
-                    ),
-                  )
-                ]),
-              )),
+                        QuillEditor.basic(
+                          configurations: const QuillEditorConfigurations(
+                            readOnly: false,
+                          ),
+                        )
+                      ])))),
               KeyboardVisibilityBuilder(
                 builder: (context, isKeyboardVisible) {
                   return AnimatedContainer(
